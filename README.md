@@ -541,3 +541,5 @@ describe('TestComponent', () => {
 ```bash
 npm test
 ```
+
+- Run the above command to execute the test cases.
