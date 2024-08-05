@@ -430,3 +430,114 @@ const UserPage = () => {
 
 export default UserPage;
 ```
+
+# Testing
+
+## Installation and Setup
+
+```bash
+npm install -D jest jest-environment-jsdom @testing-library/react @testing-library/jest-dom
+```
+
+```bash
+npm init jest@latest
+```
+
+- Copy the below contents in the `jest.config.ts`
+
+```ts
+import type { Config } from 'jest'
+import nextJest from 'next/jest.js'
+ 
+const createJestConfig = nextJest({
+  // Provide the path to your Next.js app to load next.config.js and .env files in your test environment
+  dir: './',
+})
+ 
+// Add any custom config to be passed to Jest
+const config: Config = {
+  coverageProvider: 'v8',
+  testEnvironment: 'jsdom',
+  // Add more setup options before each test is run
+  // setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
+}
+ 
+// createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async
+export default createJestConfig(config)
+```
+
+```bash
+ npm i --save-dev @types/jest
+```
+
+- Create a folder called as `__tests__` in the `src` folder
+- In the `__tests__` folder create 2 Folders
+	  1. api
+	  2. components
+
+- In the `api` folder again create 3 folders
+	  1. domain
+	  2. application
+	  3. infrastructure
+
+- For each component to test create a separate folder in the `component` folder
+
+
+```bash
+npm test
+```
+
+## Testing at component level
+
+- Assume this is the component required for testing
+
+```ts
+import React from 'react'
+
+const TestComponent = () => {
+  return (
+    <div>
+        <h1>Hello World</h1>
+        <p>Paragarph For Testing Component</p>
+    </div>
+  )
+}
+
+export default TestComponent
+```
+
+- Inside the `__tests__` folder under `components` folder create a new folder by the component name - `TestComponent` 
+- Inside the `TestComponent` folder create a `TestComponent.test.tsx` file
+- Follow the `ComponentName.test.tsx` naming convention
+
+```ts
+import '@testing-library/jest-dom'
+import { render, screen } from '@testing-library/react'
+import TestComponent from '@/presentation/components/TestComponent/TestComponent'
+
+describe('TestComponent', () => {
+  it('renders a heading', () => {
+    render(<TestComponent />)
+    const heading = screen.getByRole('heading', { level: 1 })
+    expect(heading).toBeInTheDocument()
+  })
+
+  it('Contains Text Hello World', () => {
+    render(<TestComponent />)
+    const heading = screen.getByRole('heading', { level: 1 })
+    expect(heading).toHaveTextContent('Hello World')
+  })
+
+  it('Contains Text Paragarph For Testing Component', () => {
+    render(<TestComponent />)
+    const paragraph = screen.getByText('Paragarph For Testing Component')
+    expect(paragraph).toBeInTheDocument()
+  })
+})
+```
+
+- Write the test-cases in the above format
+
+```bash
+npm test
+```

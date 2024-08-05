@@ -6,3 +6,4 @@ export const getUsers = async (): Promise<userDetailsModel[]> => {
     return await fecthUsersFromApi();
 };
 
+
