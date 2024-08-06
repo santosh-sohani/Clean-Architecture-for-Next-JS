@@ -543,3 +543,27 @@ npm test
 ```
 
 - Run the above command to execute the test cases.
+
+
+- Update the `package.json` file script object
+
+```json
+"scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "test:watch:coverage": "jest --watch --coverage"
+  }
+```
+
+
+```bash
+npm run test:watch:coverage
+```
+
+- Run the above command for code coverage as well.
+- Refer the `components` folder under `presenttation` and `__tests__` layers for more scenarios on component testing
