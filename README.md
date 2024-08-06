@@ -548,16 +548,9 @@ npm test
 - Update the `package.json` file script object
 
 ```json
-"scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint",
-    "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "test:watch:coverage": "jest --watch --coverage"
-  }
 ```
 
 
