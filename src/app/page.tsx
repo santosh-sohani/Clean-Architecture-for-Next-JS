@@ -1,7 +1,7 @@
 "use client"
 import React from 'react';
-import { Button } from '@/presentation/components/Button/Button';
-import UsersPage from '../presentation/Pages/UsersPage'
+import UserIDComponent from '@/presentation/components/UserID/UserIDComponent';
+import UserPage from '@/presentation/Pages/UserPage';
 
 const handleClick = () => {
   console.log("Button clicked");
@@ -10,7 +10,8 @@ const handleClick = () => {
 const Home = () => {
   return (
     <div className='m-2'>
-      <UsersPage/>
+      <UserIDComponent/>
+      <UserPage/>
     </div>
   )
 }
