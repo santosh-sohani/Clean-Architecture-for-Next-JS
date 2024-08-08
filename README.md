@@ -560,3 +560,4 @@ npm run test:watch:coverage
 
 - Run the above command for code coverage as well.
 - Refer the `components` folder under `presenttation` and `__tests__` layers for more scenarios on component testing
+- This will be the output for the `coverage` command.
