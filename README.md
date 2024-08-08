@@ -560,3 +560,5 @@ npm run test:watch:coverage
 
 - Run the above command for code coverage as well.
 - Refer the `components` folder under `presenttation` and `__tests__` layers for more scenarios on component testing
+
+  ![TEST CASES SCREENSHOT](https://github.com/user-attachments/assets/29d5be1a-9880-4b43-8d04-171625eb94f7)
