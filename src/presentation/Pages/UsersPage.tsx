@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { userDetailsModel } from '@/domain/models/user.model';
+import { userDetailsModel,userResponseModel} from '@/domain/models/user.model';
 import { getUsers } from '@/applications/usecase/getUsers';
-
 import ContentLoader from 'react-content-loader';
 
 const CardPage = () => {
-  const [users, setUsers] = useState<userDetailsModel[]>([]);
+  const [users, setUsers] = useState<userResponseModel[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -13,16 +12,14 @@ const CardPage = () => {
     const fetchData = async () => {
       setLoading(true);
       setError(null);
-        setTimeout(async () => {
           try {
-            const fetchedUsers = await getUsers();
+            const fetchedUsers = await getUsers();            
             setUsers(fetchedUsers);
           } catch (error) {
             setError('Failed to fetch users');
           } finally {
             setLoading(false);
           }
-        },2000)
     };
 
     fetchData()
@@ -41,13 +38,11 @@ const CardPage = () => {
         ) : (
           users.map((user) => (
             <div
-              key={user.id}
+              key={user.USERID}
               className='border border-gray-300 bg-blue-100 rounded-md shadow-sm p-3 w-full md:w-1/3 lg:w-1/4 text-gray-700'
             >
-              <p><strong>ID:</strong> {user.id}</p>
-              <p><strong>Name:</strong> {user.name}</p>
-              <p><strong>Username:</strong> {user.username}</p>
-              <p><strong>Email:</strong> {user.email}</p>
+              <p><strong>ID:</strong> {user.USERID}</p>
+              <p><strong>Name:</strong> {user.USERNAME}</p>
             </div>
           ))
         )}

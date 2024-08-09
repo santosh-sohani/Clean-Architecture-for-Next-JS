@@ -21,3 +21,8 @@ export interface userDetailsModel {
         bs: string
     }
 }
+
+export interface userResponseModel {
+    USERID: number
+    USERNAME: string
+}

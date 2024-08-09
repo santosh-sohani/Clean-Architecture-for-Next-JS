@@ -1,46 +1,133 @@
-import { getUsers } from '@/applications/usecase/getUsers';
-import { fecthUsersFromApi } from '@/infrastructure/api/user.api';
-import { userDetailsModel } from '@/domain/models/user.model';
+import axios from "axios";
+import { userDetailsModel } from "@/domain/models/user.model";
+import { getUsers } from "@/applications/usecase/getUsers";
 
-jest.mock('../../../infrastructure/api/user.api');
-const mockedFetchUsersFromApi = fecthUsersFromApi as jest.MockedFunction<typeof fecthUsersFromApi>;
+jest.mock("axios");
 
-describe('getUsers', () => {
-  it('should return users', async () => {
-    const users: userDetailsModel[] = [
-      {
-        id: 1,
-        name: 'John Doe',
-        username: 'johndoe',
-        email: 'john.doe@example.com',
-        address: {
-          street: '123 Main St',
-          suite: 'Apt 1',
-          city: 'Somewhere',
-          zipcode: '12345',
-          geo: {
-            lat: '0.0000',
-            lng: '0.0000',
-          },
-        },
-        phone: '123-456-7890',
-        website: 'johndoe.com',
-        company: {
-          name: 'Doe Inc',
-          catchPhrase: 'Innovate and Lead',
-          bs: 'business solutions',
-        },
-      },
-    ];
+describe("getUsers", () => {
+    it("fetches user details from API", async () => {
+        const mockedAxios = axios as jest.Mocked<typeof axios>;
+        const mockResponse: userDetailsModel[] = [
+            {
+                "id": 1,
+                "name": "Leanne Graham",
+                "username": "Bret",
+                "email": "Sincere@april.biz",
+                "address": {
+                  "street": "Kulas Light",
+                  "suite": "Apt. 556",
+                  "city": "Gwenborough",
+                  "zipcode": "92998-3874",
+                  "geo": {
+                    "lat": "-37.3159",
+                    "lng": "81.1496"
+                  }
+                },
+                "phone": "1-770-736-8031 x56442",
+                "website": "hildegard.org",
+                "company": {
+                  "name": "Romaguera-Crona",
+                  "catchPhrase": "Multi-layered client-server neural-net",
+                  "bs": "harness real-time e-markets"
+                }
+              },
+              {
+                "id": 2,
+                "name": "John Cena",
+                "username": "Bret",
+                "email": "Sincere@april.biz",
+                "address": {
+                  "street": "Kulas Light",
+                  "suite": "Apt. 556",
+                  "city": "Gwenborough",
+                  "zipcode": "92998-3874",
+                  "geo": {
+                    "lat": "-37.3159",
+                    "lng": "81.1496"
+                  }
+                },
+                "phone": "1-770-736-8031 x56442",
+                "website": "hildegard.org",
+                "company": {
+                  "name": "Romaguera-Crona",
+                  "catchPhrase": "Multi-layered client-server neural-net",
+                  "bs": "harness real-time e-markets"
+                }
+              }
+        ]
 
-    mockedFetchUsersFromApi.mockResolvedValue(users);
+        // Simulate a successful API call without hitting the actual API
+        mockedAxios.get.mockResolvedValueOnce({ data: mockResponse });
 
-    const result = await getUsers();
-    expect(result).toEqual(users);
-  });
+        // Call the function to test it (axios.get is mocked, so no real API call)
+        const result = await getUsers();
+        expect(mockedAxios.get).toHaveBeenCalledWith(`${process.env.NEXT_PUBLIC_BASE_URL}/users`);
+        expect(result).toEqual(mockResponse);
+    })
 
-  it('should propagate error from infrastructure layer', async () => {
-    mockedFetchUsersFromApi.mockRejectedValue(new Error('Failed to fetch users'));
-    await expect(getUsers()).rejects.toThrow('Failed to fetch users');
-  });
-});
+    it("throws an error when the API call fails", async () => {
+        const mockedAxios = axios as jest.Mocked<typeof axios>;
+        mockedAxios.get.mockRejectedValueOnce(new Error('API Error'));
+        await expect(getUsers()).rejects.toThrow('Failed to fetch users');
+    })
+
+    it("response length should be 2", async () => {
+        const mockedAxios = axios as jest.Mocked<typeof axios>;
+        const mockResponse: userDetailsModel[] = [
+            {
+                "id": 1,
+                "name": "Leanne Graham",
+                "username": "Bret",
+                "email": "Sincere@april.biz",
+                "address": {
+                  "street": "Kulas Light",
+                  "suite": "Apt. 556",
+                  "city": "Gwenborough",
+                  "zipcode": "92998-3874",
+                  "geo": {
+                    "lat": "-37.3159",
+                    "lng": "81.1496"
+                  }
+                },
+                "phone": "1-770-736-8031 x56442",
+                "website": "hildegard.org",
+                "company": {
+                  "name": "Romaguera-Crona",
+                  "catchPhrase": "Multi-layered client-server neural-net",
+                  "bs": "harness real-time e-markets"
+                }
+              },
+              {
+                "id": 2,
+                "name": "John Cena",
+                "username": "Bret",
+                "email": "Sincere@april.biz",
+                "address": {
+                  "street": "Kulas Light",
+                  "suite": "Apt. 556",
+                  "city": "Gwenborough",
+                  "zipcode": "92998-3874",
+                  "geo": {
+                    "lat": "-37.3159",
+                    "lng": "81.1496"
+                  }
+                },
+                "phone": "1-770-736-8031 x56442",
+                "website": "hildegard.org",
+                "company": {
+                  "name": "Romaguera-Crona",
+                  "catchPhrase": "Multi-layered client-server neural-net",
+                  "bs": "harness real-time e-markets"
+                }
+              }
+        ]
+
+        // Simulate a successful API call without hitting the actual API
+        mockedAxios.get.mockResolvedValueOnce({ data: mockResponse });
+
+        const result = await getUsers();
+        expect(mockedAxios.get).toHaveBeenCalledWith(`${process.env.NEXT_PUBLIC_BASE_URL}/users`);
+        expect(result).toHaveLength(2);
+    })
+
+})
